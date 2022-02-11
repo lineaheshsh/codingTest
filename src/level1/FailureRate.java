@@ -16,28 +16,36 @@ public class FailureRate {
      */
     public static int[] solution(int N, int[] stages) {
         int[] answer = new int[N];
-        int maxValue = stages.length;
+        int maxValue = stages.length; // 최대 인원 수
 
         Map<Integer, Integer> stagesMap = Arrays.stream(stages).boxed().collect(Collectors.groupingBy(e -> e,
                 Collectors.reducing(0, e -> 1, Integer::sum)));
 
-
-//        System.out.println("stage count : " + N);
+        // 실패율 구하기
         Map<Integer, Double> resultMap = new HashMap<>();
         for (int i = 1; i <= N; i++) {
             if (stagesMap.containsKey(i)) {
-//                (double) oneNowValue / (double) oneTotalValue * 100.0;
-//                System.out.println(stagesMap.get(i) + " % " + maxValue + " : " + ((double) stagesMap.get(i) / (double) maxValue) * 100.0);
                 resultMap.put(i, ((double) stagesMap.get(i) / (double) maxValue) * 100.0);
                 maxValue = maxValue - stagesMap.get(i);
-//                System.out.println("max : " + maxValue);
             } else {
-//                System.out.println(0);
                 resultMap.put(i, Constants.ZERO_VALUE);
             }
         }
 
-        System.out.println(stagesMap.toString());
+        // Map.Entry 리스트 작성
+        List<Map.Entry<Integer, Double>> list_entries = new ArrayList<>(resultMap.entrySet());
+        // 비교함수 Comparator를 사용하여 내림차순으로 정렬
+        Collections.sort(list_entries, new Comparator<Map.Entry<Integer, Double>>() {
+            public int compare(Map.Entry<Integer, Double> obj1, Map.Entry<Integer, Double> obj2) {
+                // 내림차순 정렬
+                return obj2.getValue().compareTo(obj1.getValue());
+            }
+        });
+
+        int i=0;
+        for(Map.Entry<Integer, Double> entry : list_entries) {
+            answer[i++] = entry.getKey();
+        }
         return answer;
     }
 
