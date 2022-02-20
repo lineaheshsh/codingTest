@@ -2,48 +2,63 @@ package level2;
 
 public class StringZip {
     public static int solution(String s) {
-        int answer = 0;
-        String result = "";
-        if (s.length() % 2 == 0) {
-            int len = s.length();
-            int mod = len / 2;
+        int answer = s.length();
 
-            String prev = s.substring(0, mod);
-            String last = s.substring(mod, len);
-
-            if (prev.equals(last)) result = "2" + prev;
-            else {
-                int sameCnt = 0;
-                for (int i = 1; i < s.length() / 2; i++) {
-                    System.out.println("###########################################################");
-                    System.out.println("");
-                    for (int j = 0; j < s.length(); j+=i) {
-                        System.out.println("######### j = [" + j + "], i = [" + (j+i) + "]");
-                        if (j+i < s.length()) {
-                            String temp = s.substring(j,j+i);
-                            System.out.println("temp = [" + temp + "]");
-                        } else {
-                            String temp = s.substring(j, s.length());
-                            System.out.println("temp = [" + temp + "]");
-                        }
+        for (int i = 1; i < s.length() / 2 + 1; i++) {
+            String prev = s.substring(0, i);
+            int count = 1;
+            String enc = "";
+            String last = "";
+            for (int j = i; j < s.length(); j += i) {
+                if (j + i > s.length()) {
+                    last = s.substring(j);
+                    continue;
+                }
+                if (prev.equals(s.substring(j, j + i))) {
+                    count++;
+                } else {
+                    enc += prev;
+                    if (count != 1) {
+                        enc = count + enc;
                     }
+                    prev = s.substring(j, j + i);
+                    count = 1;
                 }
             }
-        } else {
-
+            enc += prev + last;
+            if (count != 1) {
+                enc = count + enc;
+            }
+            answer = Math.min(answer, enc.length());
         }
 
-        answer = result.length();
         return answer;
     }
 
     public static void main(String[] args) {
         String[] s = {
-                "aabbaccc"
-//                "aabbaabb"
+                "aabbaccc", //7
+                "ababcdcdababcdcd", //9
+                "abcabcdede",   //8
+                "abcabcabcabcdededededede", //14
+                "xababcdcdababcdcd", //17
+                "abcdabcdff",
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "aabbaabb",
+                "abcdefgabcdefg",
+                "abcdefg",
+                "testntest",
+                "a",
+                "abcabcabc",
+                "abcdefgabcdefg",
+                "aaaaaaaaaaaabcd",
+                "xxxxxxxxxxyyy",
+                "aaaaaaaaaab",
+                "abcabcabcdabcfabcabcabczabcabcdddabc"
         };
 
         for (int i = 0; i < s.length; i++) {
+            System.out.println("############### " + s[i]);
             System.out.println(solution(s[i]));
         }
     }
