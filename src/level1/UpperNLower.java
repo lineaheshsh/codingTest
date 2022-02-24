@@ -3,28 +3,27 @@ package level1;
 public class UpperNLower {
     public static String solution(String s) {
         String answer = "";
-        char[] sArr = s.toCharArray();
-        int len = s.length();
+        String[] sArr = s.split("");
+        int idxCnt = 0;
 
-        for (int i = 0; i < len; i++) {
-            int ascii = 0;
-            if (i%2 == 0) {
-                ascii = (int)sArr[i] - 32;
+        for (int i = 0; i < sArr.length; i++) {
+            if (" ".equals(sArr[i])) {
+                answer += " ";
+                idxCnt = 0;
             } else {
-                ascii = (int)sArr[i];
-                if (ascii >= 97 && ascii <= 122) {
+                if (idxCnt%2 == 0) answer += sArr[i].toUpperCase();
+                else answer += sArr[i].toLowerCase();
 
-                } else {
-                    ascii += 32;
-                }
+                idxCnt++;
             }
-            answer += (char)ascii;
         }
+
         return answer;
     }
 
     public static void main(String[] args) {
-        String s = "try hello world";
-        System.out.println(solution(s));
+//        String s = "try hello world";
+        String s = "try hello world ";
+        System.out.println("[" + solution(s) + "]");
     }
 }
