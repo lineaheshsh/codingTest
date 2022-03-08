@@ -2,14 +2,16 @@ package leetcode;
 
 public class PalindromeNumber {
     public static boolean isPalindrome(int x) {
-        boolean isSame = false;
-        String xStr = String.valueOf(x);
-        StringBuilder sb = new StringBuilder(xStr);
-        if (xStr.equalsIgnoreCase(sb.reverse().toString())) {
-            isSame = true;
+        if (x < 0) return false;
+
+        int n = x;
+        int reverse=0;
+        while(n!=0){
+            reverse= reverse * 10 + n % 10;
+            n /= 10;
         }
 
-        return isSame;
+        return x == reverse;
     }
 
     public static void main(String[] args) {
