@@ -5,11 +5,8 @@ public class RemoveDuplicatesFromSortedArray {
         if (nums.length == 0) return 0;
         int i = 0;
         for (int j = 1; j < nums.length; j++) {
-            System.out.println("before j : " + j + ", before i : " + i);
             if (nums[j] != nums[i]) {
-                System.out.println("j : " + j + ", i : " + i);
                 i++;
-                System.out.println("nums[j] : " + nums[j] + ", nums[i] : " + nums[i]);
                 nums[i] = nums[j];
             }
         }
