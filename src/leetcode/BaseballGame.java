@@ -5,22 +5,31 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BaseballGame {
+    public final class Constant {
+        public static final String CANCLE = "C";
+        public static final String DOUBLE = "D";
+        public static final String SUM = "+";
+
+        public static final String NUM_PATTERN = "^(-[0-9]|[0-9])*$";
+        private Constant() {};
+    }
+
     public static int calPoints(String[] ops) {
 
         List<Integer> list = new ArrayList<>();
         for (String o : ops) {
             switch (o) {
-                case "C":
+                case Constant.CANCLE:
                     list.remove(list.size() - 1);
                     break;
-                case "D":
+                case Constant.DOUBLE:
                     int dNum = 0;
                     if (list != null && list.size() > 0) {
                         dNum = list.get(list.size() - 1);
                         list.add(2 * dNum);
                     }
                     break;
-                case "+":
+                case Constant.SUM:
                     int firstNum = 0;
                     int secondNum = 0;
                     if (list != null && list.size() > 1) {
@@ -30,7 +39,11 @@ public class BaseballGame {
                     }
                     break;
                 default:
-                    list.add(Integer.valueOf(o));
+                    if (o.matches(Constant.NUM_PATTERN)) {
+                        list.add(Integer.valueOf(o));
+                    } else {
+                        System.out.println("Not Num pattern.");
+                    }
                     break;
             }
         }
