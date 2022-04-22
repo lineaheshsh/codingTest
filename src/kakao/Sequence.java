@@ -3,27 +3,10 @@ package kakao;
 public class Sequence {
 
     public static String sequence(int n, int x, int y) {
-
-        if (x < 0) return null;
-
-        String str = "0";
         String result = "";
         String seq = "";
 
-        for (int i = 0; i < n; i++) {
-            if (!"".equals(result)) {
-                str = "";
-                for (int j = 0; j < result.length(); j++) {
-                    int ascii = (int) result.charAt(j);
-                    if (ascii == 48) {
-                        str += String.valueOf((char) (ascii + 1));
-                    } else {
-                        str += String.valueOf((char) (ascii - 1));
-                    }
-                }
-            }
-            result += str;
-        }
+        result = makeSeq(n, "0", 1);
 
         if (y > result.length()) return null;
         else {
@@ -31,6 +14,22 @@ public class Sequence {
         }
 
         return seq;
+    }
+
+    private static String makeSeq(int n, String str, int cnt) {
+        if (cnt == n) return str;
+        else {
+            String temp = "";
+            for (int j = 0; j < str.length(); j++) {
+                int ascii = (int) str.charAt(j);
+                if (ascii == 48) {
+                    temp += String.valueOf((char) (ascii + 1));
+                } else {
+                    temp += String.valueOf((char) (ascii - 1));
+                }
+            }
+            return makeSeq(n, str + temp, cnt+1);
+        }
     }
 
     public static void main(String[] args) {
